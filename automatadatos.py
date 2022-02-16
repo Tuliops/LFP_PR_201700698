@@ -3,7 +3,8 @@ from mes import *
 from producto import *
 
 
-nuevoMes=mes("nombre", "año","producots" )
+
+
 
 class automatadatos:
     def __init__(self):
@@ -17,6 +18,8 @@ class automatadatos:
     NameProduct = ''
     PriceProduct=''
     cantidadProduct = ''
+    nameMes = ''
+    yearMes = ''
 
     def analizador(self, entrada):
         lex = ""
@@ -46,14 +49,19 @@ class automatadatos:
                     #Dos puntos y comienza el año 
                 elif re.search(r"[:]" , entrada[indice]):
                     nombreMes = lex
+                    global nameMes
+                    nameMes = lex.upper()
+                    print(">>>>>>>>>>>>>>>Nuevo Mes<<<<<<<<<<<<<<<<<")
                     print("Nombre del Mes :",nombreMes)
-                    #envia a estaod 2 para verificar año 
+                    #envia a estado 2 para verificar año 
                     estado = 2
-                    lex=''
+                    lex = ''
                 elif re.search(r"[(]", entrada[indice]):
                     estado = 3
                     indice += 1
-                    
+                elif re.search(r"[\n]", entrada[indice]):
+                    estado = 1
+                    indice += 1
                 else:
                     lex+=entrada[indice]
                     estado = 1 
@@ -61,19 +69,26 @@ class automatadatos:
             #Verificador Año 
             if estado == 2:
                 #Verifica si el caracter y separa el año 
+
                 if re.search(r"[0-9]", entrada[indice]):
                     lex += entrada[indice]
                     indice +=1
                     estado = 2
                     #Si es = termina el año y comienzan los productos 
+                elif re.search(r"[:]", entrada[indice]):
+                    estado = 2
+                    indice+=1
                 elif re.search(r"[=]", entrada[indice]):
                     anioMes=lex
-                    print("Año del Mes: ",anioMes)
+                    global yearMes
+                    yearMes = lex
+                    print("Año del Mes:",anioMes)
                     
                     indice += 1
                     lex =''
                     #Envia a estado de los productos
                     estado = 1
+                
                 else:
                     #Si no se Encuentra el caracter aumetna indice y sigue en estado 2 de verificacion
                     lex += entrada[indice]
@@ -106,10 +121,13 @@ class automatadatos:
 
 
                 elif re.search(r"[)]", entrada[indice]):
-
+                    self.addMes()
+                    nameMes=''
+                    yearMes=''
                     indice+=1
                     estado = 1
-
+                    
+                    
                 else :
                        #Si no se Encuentra el caracter aumetna indice y sigue en estado 3 de verificacion
                     lex += entrada[indice]
@@ -137,6 +155,7 @@ class automatadatos:
                     print("----------Nuevo Producto-------------")
                     global NameProduct
                     NameProduct = lex
+                    NameProduct=NameProduct.upper()
                     print("producto : ",NameProduct)
                     indice += 1
                     estado = 5
@@ -149,6 +168,9 @@ class automatadatos:
                     estado = 4
                 elif re.search(r"[\”]", entrada[indice]):
                     indice += 1
+                    estado = 4
+                elif re.search(r"[\"]", entrada[indice]):
+                    indice +=1
                     estado = 4
                 else : 
                     
@@ -213,6 +235,7 @@ class automatadatos:
         
             if estado == 0:
                 break
+    #Lista de productos por mes 
     listaProductos = []
     
     #Metodo Creacion de Objetos Producto 
@@ -224,7 +247,29 @@ class automatadatos:
         PriceProduct = float(PriceProduct)
         if cantidadProduct == '':
             cantidadProduct = 0
+
         newProduct = producto(NameProduct, PriceProduct, cantidadProduct)
-        self.listaProductos.append(newProduct)      
         
+        self.listaProductos.append(newProduct)     
+    #Lista de Meses 
+    listaMes=[]
+    #Agregar nuevo mes a la listata 
+    def addMes(self):
+        
+        global nameMes
+        global yearMes
+        
+        nuevo = mes(nameMes, yearMes,self.listaProductos)
+        self.listaMes.append(nuevo)
+        self.listaProductos=[]
+
+    def imprimir(self):
     
+        for i in range(len(self.listaMes)):
+            print("---------Mes "+ str(i+1))
+            print(self.listaMes[i].getNombre(), ": ", self.listaMes[i].getAño())
+           
+            for j in range(len(self.listaMes[i].getProductos())):
+                print("Producto",j+1)
+                print(self.listaMes[i].getProductos()[j].getNombreProducto(),":",
+                self.listaMes[i].getProductos()[j].getPrecio(),":->",self.listaMes[i].getProductos()[j].getCantidad())

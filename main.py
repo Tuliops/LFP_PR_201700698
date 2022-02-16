@@ -7,11 +7,13 @@ from tkinter import filedialog
 import io
 from io import *
 from automatadatos import *
-
+from mes import* 
+from automata_instrucciones import *
+entradaInstrucciones = automata_instrucciones()
 entradaData = automatadatos()
 Data =[]
 Entrada = ''
-
+Mes=[]
 def menu1():
     """
 	Función que limpia la pantalla y muestra nuevamente el menu
@@ -40,17 +42,29 @@ def MenuPrincipal():
 
         elif opcionMenu=="2":
             print("---->Cargar Instrucciones")
-                
-                    
+            CargarInstrucciones()
+            global Instrucciones
+            
+            print("entrada analizador ")
+            entradaInstrucciones.automataInstrucciones(Instrucciones)     
         elif opcionMenu=="3":
             print("Analizar")
             global Entrada
             print(Entrada)
             entradaData.analizador(Entrada)
+            
+            
         elif opcionMenu =="4":
-            print("Reportes")
-            for x in entradaData.listaProductos:
-                    print(x.getNombre() ," ", x.getPrecio())
+            print("Datos ")
+            entradaData.imprimir()
+            print("<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>")
+                    
+                   
+                    
+
+           
+                
+
         elif opcionMenu=="5":
                     break
         else:
@@ -62,8 +76,31 @@ def MenuPrincipal():
 def CargarData():
     
     
-
+    root = Tk()
         #Abre Ventana para Buscar el archivo .data 
+    archivo =   filedialog.askopenfilename(initialdir = "/") 
+        #Abre el achivo 
+    archivo_texto = open(archivo ,'r',encoding="utf8")
+        #Contenido del archivo leido 
+    texto = archivo_texto.read()
+    archivo_texto.close()
+        #Analiza el contenido del Archivo 
+    
+    global Entrada
+    Entrada = texto
+    root.destroy()
+    print("Archivo del Mes .Data ")
+    print(Entrada)
+    print("--------------------------------------")
+    
+    #Carga Instrucciones  .flp
+Instrucciones = ''
+    
+def CargarInstrucciones():
+    
+    
+    root=Tk()
+        #Abre Ventana para Buscar el archivo .lfp 
     archivo =  filedialog.askopenfilename(initialdir = "/") 
         #Abre el achivo 
     archivo_texto = open(archivo ,'r',encoding="utf8")
@@ -71,25 +108,14 @@ def CargarData():
     texto = archivo_texto.read()
     archivo_texto.close()
         #Analiza el contenido del Archivo 
-    print(texto)
-    global Entrada
-    Entrada = texto
-    print(Entrada)
     
+    global Instrucciones
+    Instrucciones = texto
+    root.destroy()
+    print("Archivo de Instrucciones .flp")
+    print(Instrucciones)
+    print("----------------------------")
 
-    #Carga Instrucciones  .flp
-def CargarInstrucciones():
-    
-    
-
-        #Abre Ventana para Buscar el archivo .lfp 
-    archivo =  filedialog.askopenfilename(initialdir = "/") 
-        #Abre el achivo 
-    archivo_texto = open(archivo ,'r',encoding="utf8")
-        #Contenido del archivo leido 
-    texto = archivo_texto.read()
-        #Analiza el contenido del Archivo 
-    print(texto)
 
 if __name__ == "__main__":
    MenuPrincipal()

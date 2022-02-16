@@ -1,21 +1,21 @@
 class producto :
     
-    def __init__(self,nombre,precio,cantidad):
-        self.nombre = nombre
+    def __init__(self,nombreProducto,precio,cantidad):
+        self.nombreProducto = nombreProducto
         self.precio = precio
         self.cantidad = cantidad
     #METODOS SET
     
-    def setNombre(self,nombre):
-        self.nombre = nombre
+    def setNombre(self,nombreProducto):
+        self.nombreProducto = nombreProducto
     def setPrecio(self,precio):
         self.precio = precio
     def setCantidad(self,cantidad):
         self.cantidad = cantidad
     #METODOS GET    
 
-    def getNombre(self):
-        return self.nombre
+    def getNombreProducto(self):
+        return self.nombreProducto
     def getPrecio(self):
         return self.precio
     def getCantidad(self):

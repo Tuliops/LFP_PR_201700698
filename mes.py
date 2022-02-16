@@ -1,6 +1,6 @@
 class mes :
     productos = []
-    def __init__(self,nombre,año,productos):
+    def __init__(self,nombre,año,productos=[]):
         self.nombre = nombre
         self.año = año 
         self.productos = productos
@@ -9,7 +9,7 @@ class mes :
         return self.nombre
     def getAño(self):
         return self.año
-    def getproductos(slef):
+    def getProductos(self):
         return self.productos
     #METODOS SET
     def setNombre(self,nombre):
