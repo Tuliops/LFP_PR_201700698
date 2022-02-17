@@ -43,16 +43,15 @@ def MenuPrincipal():
         elif opcionMenu=="2":
             print("---->Cargar Instrucciones")
             CargarInstrucciones()
-            global Instrucciones
             
-            print("entrada analizador ")
-            entradaInstrucciones.automataInstrucciones(Instrucciones)     
         elif opcionMenu=="3":
             print("Analizar")
             global Entrada
             print(Entrada)
             entradaData.analizador(Entrada)
-            
+            global Instrucciones
+            entradaInstrucciones.automataInstrucciones(Instrucciones) 
+            graficaYanalizar()
             
         elif opcionMenu =="4":
             print("Datos ")
@@ -116,6 +115,101 @@ def CargarInstrucciones():
     print(Instrucciones)
     print("----------------------------")
 
+#Analizando y Graficacndo 
+import matplotlib.pyplot as plt
+import numpy as np
+def graficaYanalizar():
+    ejeX=[]
+    ejeY = []
+    NOMBRE = ''
+    GRAFICA = ''
+    TITULOX = ''
+    TITULOY = ''
+    TITULO = ''
+    for i in range(len(entradaData.listaMes)):
+        for j in range(len(entradaData.listaMes[i].getProductos())):
+            ejeX.append(entradaData.listaMes[i].getProductos()[j].getNombreProducto())
+            precio = entradaData.listaMes[i].getProductos()[j].getPrecio()
+            cantidad= entradaData.listaMes[i].getProductos()[j].getCantidad()
+            ganancia = entradaData.gananciasGeneradas(precio, cantidad)
+            ejeY.append(ganancia)
+    for i in range(len(entradaInstrucciones.instrucciones)):
+        
+        for j in range(len(entradaInstrucciones.instrucciones[i])):
+           
+            if entradaInstrucciones.instrucciones[i][j] == 'NOMBRE':
+                NOMBRE = entradaInstrucciones.instrucciones[i][j+1]
+            elif entradaInstrucciones.instrucciones[i][j] == 'GRAFICA':
+                GRAFICA=entradaInstrucciones.instrucciones[i][j+1]
+                
+            elif entradaInstrucciones.instrucciones[i][j]=='TITULO':
+                if entradaInstrucciones.instrucciones[i][j+1] =='':
+                    
+                    TITULO = tituloOpcional()
+                    
+                elif  entradaInstrucciones.instrucciones[i][j+1]!='':
 
+                    TITULO = entradaInstrucciones.instrucciones[i][j+1]
+            elif entradaInstrucciones.instrucciones[i][j] == 'TITULOX':
+                
+                if entradaInstrucciones.instrucciones[i][j+1] != '':
+                    TITULOX = entradaInstrucciones.instrucciones[i][j+1]
+                elif entradaInstrucciones.instrucciones[i][j+1] =='':
+                    TITULOX = entradaInstrucciones.instrucciones[i][j+1]
+
+            elif entradaInstrucciones.instrucciones[i][j] == 'TITULOY':
+                 if entradaInstrucciones.instrucciones[i][j+1] != '':
+                    TITULOY = entradaInstrucciones.instrucciones[i][j+1]
+                 elif entradaInstrucciones.instrucciones[i][j+1] =='':
+                    TITULOY = entradaInstrucciones.instrucciones[i][j+1]
+                    
+                
+    if GRAFICA =='BARRAS':
+        graficaBarras(ejeX, ejeY, TITULO, TITULOX, TITULOY, NOMBRE)
+    elif  GRAFICA =='PIE':
+        graficaPie(ejeX, ejeY, TITULO, TITULOX, TITULOY, NOMBRE)
+    elif GRAFICA =='LINEAS':
+        print("entra a grafica lineas")
+        graficaLineal(ejeX, ejeY, TITULO, TITULOX, TITULOY, NOMBRE)
+    entradaData.limpiarMes()
+    entradaInstrucciones.limpliarListaInstrucciones()
+
+def tituloOpcional():
+    titluloOpcional = ''
+    año = ''
+    for i in range(len(entradaData.listaMes)):
+       
+        for j in range(len(entradaData.listaMes[i].getProductos())):
+            nombremes = entradaData.listaMes[i].getNombre()
+            año = entradaData.listaMes[i].getAño()
+            titluloOpcional = nombremes+'-'+año
+
+    return titluloOpcional
+
+def graficaLineal(ejeX,ejeY,TITULO,TITULOX,TITULOY,NOMBRE):
+    plt.title(TITULO)
+    plt.xlabel(TITULOX)
+    plt.ylabel(TITULOY)
+    plt.plot(ejeX,ejeY)
+    plt.savefig(NOMBRE+"1png",dpi=300, bbox_inches='tight')
+   
+    plt.ioff()
+    plt.show()
+    
+def graficaBarras(ejeX,ejeY,TITULO,TITULOX,TITULOY,NOMBRE):
+    plt.title(TITULO)
+    plt.xlabel(TITULOX)
+    plt.ylabel(TITULOY)
+    plt.bar(ejeX, ejeY)
+    plt.savefig(NOMBRE+"1png",dpi=300, bbox_inches='tight')
+   
+    plt.show()
+    #plt.savefig("Plot generated using Matplotlib.png")
+def graficaPie(ejeX,ejeY,TITULO,TITULOX,TITULOY,NOMBRE):
+    plt.title(TITULO)
+    
+    plt.pie(ejeY, labels=ejeX)
+    plt.savefig(NOMBRE+"1png",dpi=300, bbox_inches='tight')
+    plt.show()
 if __name__ == "__main__":
    MenuPrincipal()

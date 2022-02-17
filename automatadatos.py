@@ -273,3 +273,9 @@ class automatadatos:
                 print("Producto",j+1)
                 print(self.listaMes[i].getProductos()[j].getNombreProducto(),":",
                 self.listaMes[i].getProductos()[j].getPrecio(),":->",self.listaMes[i].getProductos()[j].getCantidad())
+    def gananciasGeneradas(self,precio,cantidad):
+        ganancias = float(precio)*float(cantidad)
+        return ganancias
+
+    def limpiarMes(self):
+        self.listaMes.clear()
