@@ -52,6 +52,7 @@ def MenuPrincipal():
             print(Entrada)
             entradaData.analizador(Entrada)
             global Instrucciones
+            print("Entra al de instrucciones")
             entradaInstrucciones.automataInstrucciones(Instrucciones) 
             graficaYanalizar()
             
@@ -172,7 +173,7 @@ def graficaYanalizar():
     elif  GRAFICA =='PIE':
         graficaPie(ejeX, ejeY, TITULO, TITULOX, TITULOY, NOMBRE)
     elif GRAFICA =='LINEAS':
-        print("entra a grafica lineas")
+        
         graficaLineal(ejeX, ejeY, TITULO, TITULOX, TITULOY, NOMBRE)
     
 

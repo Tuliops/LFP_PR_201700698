@@ -77,8 +77,10 @@ class automata_instrucciones:
 
                         if re.search(r"[\"]", Instrucciones[indice]):
                             indice += 1
-                            
-                        elif re.search(r"[a-zA-z]", Instrucciones[indice]):
+                        elif re.search(r"[À-ÿ']", Instrucciones[indice]):
+                            lexema += Instrucciones[indice]
+                            indice += 1
+                        elif re.search(r"[a-zA-Z]", Instrucciones[indice]):
                             lexema += Instrucciones[indice]
                             indice += 1
                             
@@ -95,7 +97,7 @@ class automata_instrucciones:
                             e = 1
                         elif re.search(r"[\?]", Instrucciones[indice]):
                             NOMBRE = lexema.upper()
-                            print("NOMBRE : ", NOMBRE)
+                            print("NOMBRE en ? : ", NOMBRE)
                             lexema = ''
                             estado = 3
                             
@@ -106,7 +108,8 @@ class automata_instrucciones:
                         elif re.search(r"[ ]", Instrucciones[indice]):
                             lexema += Instrucciones[indice]
                             indice += 1
-                            
+                    lexema = ''
+                    estado = 3  
                     
                 elif lexema == 'GRAFICA':
                 
@@ -119,7 +122,9 @@ class automata_instrucciones:
                         if re.search(r"[\"]", Instrucciones[indice]):
                             indice += 1
                         
-                            
+                        elif re.search(r"[À-ÿ']", Instrucciones[indice]):
+                            lexema += Instrucciones[indice]
+                            indice += 1    
                         elif re.search(r"[a-zA-z]", Instrucciones[indice]):
                             lexema += Instrucciones[indice]
                             indice += 1
@@ -171,7 +176,9 @@ class automata_instrucciones:
                         elif re.search(r"[a-zA-z]", Instrucciones[indice]):
                             lexema += Instrucciones[indice]
                             indice += 1
-                            
+                        elif re.search(r"[À-ÿ']", Instrucciones[indice]):
+                            lexema += Instrucciones[indice]
+                            indice += 1    
                         elif re.search(r"[0-9]", Instrucciones[indice]):
                             lexema += Instrucciones[indice]
                             indice += 1
@@ -212,7 +219,9 @@ class automata_instrucciones:
                         elif re.search(r"[a-zA-z]", Instrucciones[indice]):
                             lexema += Instrucciones[indice]
                             indice += 1
-                            
+                        elif re.search(r"[À-ÿ']", Instrucciones[indice]):
+                            lexema += Instrucciones[indice]
+                            indice += 1    
                         elif re.search(r"[0-9]", Instrucciones[indice]):
                             lexema += Instrucciones[indice]
                             indice += 1
@@ -221,13 +230,11 @@ class automata_instrucciones:
                             TITULOX = lexema.upper()
                             print("TITULOX : ", TITULOX)
                             indice += 1
-                            
                             e = 1
+                            
                         elif re.search(r"[\?]", Instrucciones[indice]):
                             TITULOX = lexema.upper()
                             print("TITULOX : ", TITULOX)
-                            
-                            
                             e = 1
                         elif re.search(r"[\n]", Instrucciones[indice]):
                             indice+=1
@@ -235,7 +242,7 @@ class automata_instrucciones:
                         elif re.search(r"[ ]", Instrucciones[indice]):
                             lexema += Instrucciones[indice]
                             indice += 1
-                            
+                    
                     lexema=''
                     estado = 3
                 elif lexema =='TITULOY':
@@ -253,7 +260,9 @@ class automata_instrucciones:
                         elif re.search(r"[a-zA-z]", Instrucciones[indice]):
                             lexema += Instrucciones[indice]
                             indice += 1
-                            
+                        elif re.search(r"[À-ÿ']", Instrucciones[indice]):
+                            lexema += Instrucciones[indice]
+                            indice += 1   
                         elif re.search(r"[0-9]", Instrucciones[indice]):
                             lexema += Instrucciones[indice]
                             indice += 1
@@ -290,7 +299,7 @@ class automata_instrucciones:
    
     instrucciones=[]
     def listaInstrucciones(self,NOMBRE,GRAFICA,TITULO,TITULOX,TITULOY):
-        print(">>>>>>>>>>>>>>>LA MATIZ<<<<<<<<<<<<<<<<<<<<<<<<")
+        
         self.instrucciones.append(['NOMBRE',NOMBRE]) 
         self.instrucciones.append(['GRAFICA',GRAFICA]) 
         

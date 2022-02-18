@@ -47,6 +47,10 @@ class automatadatos:
                     estado = 1
                     #Verifica si termino el nombre 
                     #Dos puntos y comienza el año 
+                elif re.search(r"[À-ÿ']", entrada[indice]):
+                        lex += entrada[indice]
+                        indice += 1 
+                        estado = 1
                 elif re.search(r"[:]" , entrada[indice]):
                     nombreMes = lex
                     global nameMes
@@ -141,6 +145,10 @@ class automatadatos:
                     lex += entrada[indice]
                     indice += 1
                     estado = 4
+                elif re.search(r"[À-ÿ']", entrada[indice]):
+                        lex += entrada[indice]
+                        indice += 1 
+                        estado = 4
                 elif re.search(r"[0-9]", entrada[indice]):
                     lex += entrada[indice]
                     indice += 1
@@ -199,9 +207,7 @@ class automatadatos:
                     print("Precio ", PriceProduct)
                     lex = ''
                     
-               
     
-
                 else :
                     estado = 4
                     indice +=1
@@ -229,7 +235,7 @@ class automatadatos:
 
                     
                     else :
-                        print ("regresa por ", entrada[indice])
+                        
                         estado = 5
                         indice +=1
         
