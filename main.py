@@ -9,6 +9,8 @@ from io import *
 from automatadatos import *
 from mes import* 
 from automata_instrucciones import *
+from Reporte import *
+
 entradaInstrucciones = automata_instrucciones()
 entradaData = automatadatos()
 Data =[]
@@ -54,10 +56,10 @@ def MenuPrincipal():
             graficaYanalizar()
             
         elif opcionMenu =="4":
-            print("Datos ")
-            entradaData.imprimir()
-            print("<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>")
-                    
+            print("Reportes ")
+            reportehtml()
+            entradaData.limpiarMes()
+            entradaInstrucciones.limpliarListaInstrucciones()    
                    
                     
 
@@ -73,7 +75,8 @@ def MenuPrincipal():
 
 #Carga del Archivo .data
 def CargarData():
-    
+    entradaData.limpiarMes()
+    entradaInstrucciones.limpliarListaInstrucciones()
     
     root = Tk()
         #Abre Ventana para Buscar el archivo .data 
@@ -171,8 +174,7 @@ def graficaYanalizar():
     elif GRAFICA =='LINEAS':
         print("entra a grafica lineas")
         graficaLineal(ejeX, ejeY, TITULO, TITULOX, TITULOY, NOMBRE)
-    entradaData.limpiarMes()
-    entradaInstrucciones.limpliarListaInstrucciones()
+    
 
 def tituloOpcional():
     titluloOpcional = ''
