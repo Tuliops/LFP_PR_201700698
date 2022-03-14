@@ -30,8 +30,8 @@ class interfaz:
         
         comboReportes['values'] = ('Repoorte  de Tokens',
                                     'Repoorte  de Errores',
-                                    'Repoorte  de Usuario',
-                                    'Repoorte  de Tecnico',
+                                    'Repoorte  de Manual Usuario',
+                                    'Repoorte  de MAnual Tecnico',
                                     'Reportes')
         comboReportes.current('4')
         
@@ -64,17 +64,22 @@ class interfaz:
         global Instrucciones
         Instrucciones = texto
         
-        print("Archivo de Instrucciones .flp")
+        print("Archivo de Instrucciones .form")
         print(Instrucciones)
         print("----------------------------")
         global e2
-        e2.get("1.0", "end-1c")
+        
         e2.insert( INSERT,Instrucciones)
-
+        Instrucciones = e2.get("1.0", "end-1c")
+        print(Instrucciones)
+        
 
 
     def AnalizarArchivo(self):
+        global Instrucciones
         print("Analizar Archivo")
+        Instrucciones = e2.get("1.0", "end-1c")
+        print(Instrucciones)
     
    
     
