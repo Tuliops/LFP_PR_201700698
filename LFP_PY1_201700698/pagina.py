@@ -1,5 +1,5 @@
 import webbrowser
-def Pagina():
+def Pagina(listaCod =[], listaVal =[]):
 
     contenido = ''
     
@@ -25,14 +25,23 @@ def Pagina():
     
 
     """)
-  
-    contenido += etiqueta("nombre")
-    contenido += texto("nombre", "Ingrese su Nombre")
+    unir = [listaCod,listaVal]
+    i = 0
+    j = 0
+    for c in unir[0] :
+    
+        if c=='tipo':
+            #Verificar Tipo
+            pass
+        elif c == 'valor':
+            pass
+    
+    """contenido += texto("nombre", "Ingrese su Nombre")
     v = ['Masculino','Femenido']
     contenido += grupo_radio("Sexo",v)
 
     vo = ['Guatemala','Mexico','Argentina']
-    contenido += grupo_option("Pais", vo)
+    contenido += grupo_option("Pais", vo)"""
 
     htmFile.write(contenido)
     webbrowser.open("Pagina.html")

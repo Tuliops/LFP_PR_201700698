@@ -1,5 +1,5 @@
 import webbrowser
-def reportehtml(ContTabla):
+def reportehtml(listaErrores=[]):
 
     contenido = ''
     contenidomasvendido = ''
@@ -35,9 +35,9 @@ def reportehtml(ContTabla):
     </thead>
 
     """)
-    contenido += "<tr>'"
+    #contenido += "<tr>'"
     #Resivira la los datos o la tabla con los Datos 
-    """for t in tok:
+    for t in listaErrores:
         contenido += '<tr>'
         contenido += "<td>"+t.tipo + "</td>\n"
         contenido += "<td>"+t.lexema+"</td>\n"
@@ -45,12 +45,12 @@ def reportehtml(ContTabla):
         contenido += "<td>"+str(t.columna)+"</td>\n"
         contenido += '</tr>'
     
-    """
-    contenido += ContTabla
+  
+    #contenido += ContTabla
 
         
     
-    contenido  +=  "</tr>"
+    #contenido  +=  "</tr>"
     htmFile.write(contenido)
     htmFile.write("""
       </table>

@@ -1,14 +1,16 @@
 import re
 from Token import Token
 from Token import Error
-
+from ReporteErrores import reportehtml
+from ReporteToken import reportehtml
+from pagina import Pagina
 class Analizdor:
 
     def __init__(self):
-        self.listaClave_Valor = []
+        self.c = []
+        self.v = []
         self.listTokens = []
         self.LIstaError = []
-
         #Tokens
         # tipo
         # valor
@@ -22,17 +24,16 @@ class Analizdor:
         self.listaClave_Valor =  []
         self.listTokens = []
         self.LIstaError = []
+        self.c =[]
         linea = 1
         columna = 1
         lexema = ""
-
+        vs =[]
         estado = 0
         buffer = ''
         centinela = '$'
         datos += centinela
-
         index = 0
-
         while index < len(datos):
             c = datos[index]
              #signos < >  [ ] " " , 
@@ -72,13 +73,17 @@ class Analizdor:
                     self.listTokens.append(token)
                     buffer = ''
                     estado = 0
+                    self.v.append(vs)
+                    vs = []
                 elif c == '\"':
                     columna += 1
                     buffer += c   
                     token = Token("COMILLA DOBLE ", buffer, linea, columna)
                     self.listTokens.append(token)
-                    estado = 0
+                    estado = 4
                     buffer = ''
+                    
+                    
                 elif c =='\'':
                     columna += 1
                     buffer += c   
@@ -89,17 +94,18 @@ class Analizdor:
                 elif c == ',':
                     columna += 1
                     buffer += c   
-                    token = Token("COMA  ", buffer, linea, columna)
+                    token = Token("COMA ", buffer, linea, columna)
                     self.listTokens.append(token)
                     estado = 0
                     buffer = ''
+                    
                 elif c  == ':': 
                     columna += 1
                     buffer += c   
                     token = Token("DOS PUNTOS ", buffer, linea, columna)
                     self.listTokens.append(token)
-                    estado = 0
                     buffer = ''
+                    
                 #Cambiar de estado 
                 elif c == '\n':
                     columna = 1
@@ -127,51 +133,95 @@ class Analizdor:
              # fondo 
              # valores 
              # evento #
-             if re.search(r"[a-zA-Z]", c) or c==' ' or c=='-':
-                    columna += 1
-                    buffer += c 
-                    estado = 1
-             else:
-                tipoToken = ''
-                if buffer.lower() =='formulario':
-                    tipoToken = 'RESERVADA '
-                elif  buffer.lower() =='tipo':
-                    tipoToken = 'RESERVADA '
-                elif  buffer.lower() =='valor':
-                    tipoToken = 'RESERVADA '
-                elif  buffer.lower() =='nombre':
-                    tipoToken = 'RESERVADA '
-                elif  buffer.lower() =='fondo':
-                    tipoToken = 'RESERVADA '
-                elif  buffer.lower() =='valores':
-                    tipoToken = 'RESERVADA '
-                elif  buffer.lower() =='evento':
-                    tipoToken = 'RESERVADA '
-                else:
-                    tipoToken = 'IDENTIFICADOR'
-
-                token = Token(tipoToken, buffer, linea, columna)
-                self.listTokens.append(token)
-                buffer = ''
-                index -= 1 
-                estado =0 
                 
+                if re.search(r"[a-zA-Z]", c) or c==' ' :
+                    if c == ' ':
+                        columna += 1
+                        estado = 1
+                    elif c == '\t':
+                        columna += 1
+                    elif c == '\n':
+                        linea += 1
+                        columna = 1
 
-            elif estado == 2:
-                 
-                pass
-              #Espacios, Saltos de Linea , Tabs 
-            elif estado == 3 :
-                if c =='\n':
-                    linea += 1
-                elif c =='\t':
-                    columna += 1
-                elif c==' ':
-                    columna += 1 
-                pass
-             #Centinela
+                    else:
+                        buffer += c 
+                        estado = 1
+                else:
+                    tipoToken = ''
+                    
+                    if buffer.lower()  == 'formulario':
+                        tipoToken = 'RESERVADA'
+                        
+                    elif  buffer.lower() =='tipo':
+                        tipoToken = 'RESERVADA '
+                        
+                        self.c.append(buffer.lower())
+                    elif  buffer.lower() =='valor':
+                        tipoToken = 'RESERVADA'
+                        self.c.append(buffer.lower())
+                        
+                    elif  buffer.lower() =='nombre':
+                        tipoToken = 'RESERVADA '
+                        
+                        self.c.append(buffer.lower())
+                    elif  buffer.lower() =='fondo':
+                        tipoToken = 'RESERVADA '
+                        self.c.append(buffer.lower())
+                    elif  buffer.lower() =='valores':
+                        tipoToken = 'RESERVADA '
+                        self.c.append(buffer.lower())
+                    elif  buffer.lower() =='evento':
+                            tipoToken = 'RESERVADA '
+                            self.c.append(buffer.lower())
+                    else :  
+                        tipoToken = 'IDENTIFICADOR'
+                        
+                        vs.append(buffer)
+
+                    token = Token(tipoToken, buffer, linea, columna)
+                    self.listTokens.append(token)
+                    buffer = ''
+                    index -= 1 
+                    estado = 0 
+
             elif estado == 4 :
-                pass
+                if re.search(r"[a-zA-Z]", c) or re.search(r"[\"]", c) or c==' ' or c=='-' or c == '\t'or c == '\n'or re.search(r"[\:]",c):
+                        
+                    
+                        if c == '\t':
+                                columna += 1
+                        elif c == '\n':
+                                linea += 1
+                                columna = 1
+                        elif re.search(r"[\:]",c):
+                                    
+                                    columna += 1
+                                    buffer += c 
+                                    estado = 4
+                        elif c=='"':
+                                token = Token("IDENTIFICADOR",buffer, linea, columna)
+                                self.listTokens.append(token) 
+                                self.v.append(buffer)
+                                
+                                toke = Token("COMILLA DOBLE", c, linea, columna)
+                                self.listTokens.append(toke)
+                                estado = 4
+                                buffer =''
+                        else:
+                            columna += 1
+                            estado = 4
+                            buffer += c 
+                else :
+                    
+                    estado = 0
+                    index -= 1
+                    
+
+
+       
+             #Centinela
+            
             #Errores
             elif estado == 5 :
                 error = Error("Error Lexico", buffer, linea, columna)
@@ -179,8 +229,8 @@ class Analizdor:
                 buffer = ''
                 estado = 0
 
-            elif estado == 6 :
-                pass
+            
+                
 
             index += 1
         return datos
@@ -206,6 +256,17 @@ class Analizdor:
             print(i+1)
             error.mostrarError()
             i += 1
+    def RerporteErrores(self):
+        reportehtml(self.LIstaError)
+    def RerporteTokens(self):
+        reportehtml(self.listTokens)
+    
+    def claveValor(self):
+       
+        
+        Pagina(self.c, self.v)
+
+
 
     def Alfabetico(self, lex):
         if lex == 'a' or lex =='A':

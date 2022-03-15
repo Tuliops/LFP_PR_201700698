@@ -1,11 +1,11 @@
 
 import webbrowser
-def reportehtml(ContTabla):
+def reportehtml(listaTokens=[]):
 
     contenido = ''
     contenidomasvendido = ''
     contenidomenosVendido =''
-    htmFile = open( "Reporte"+ ".html", "w")
+    htmFile = open( "ReporteTokens"+ ".html", "w")
 
     htmFile.write("""<!DOCTYPE HTML PUBLIC"
 
@@ -36,9 +36,8 @@ def reportehtml(ContTabla):
     </thead>
 
     """)
-    contenido += "<tr>'"
     #Resivira la los datos o la tabla con los Datos 
-    """for t in tok:
+    for t in listaTokens:
         contenido += '<tr>'
         contenido += "<td>"+t.tipo + "</td>\n"
         contenido += "<td>"+t.lexema+"</td>\n"
@@ -46,8 +45,7 @@ def reportehtml(ContTabla):
         contenido += "<td>"+str(t.columna)+"</td>\n"
         contenido += '</tr>'
     
-    """
-    contenido += ContTabla
+    
 
         
     
