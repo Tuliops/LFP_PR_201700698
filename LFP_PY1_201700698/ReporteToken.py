@@ -56,6 +56,6 @@ def reportehtml(listaTokens=[]):
     </div>
         </body>
         </html>""")
-    webbrowser.open("Reporte.html")
+    webbrowser.open("ReporteTokens.html")
     htmFile.close
 

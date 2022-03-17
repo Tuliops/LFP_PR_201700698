@@ -3,14 +3,20 @@ from tkinter import ttk
 from tkinter import filedialog
 import io
 from io import *
+from Analizador import Analizdor
+from ReporteErrores import reportehtmlERR
+from ReporteToken import reportehtml
 class interfaz:
     root = object()
     bCargar = object()
     e2 = object()
+    bReportar = object()
+    comboReportes = object()
     def __init__(self):
         global root 
         global bCargar
         global e2
+        global comboReportes
         root = Tk()
         root.geometry('600x500')
         root.config(bg = 'thistle4')
@@ -40,6 +46,12 @@ class interfaz:
         bAnalizar.place(x=10 , y=300 , height=50 ,width=150)
         bAnalizar.config(bg="thistle2")
         bAnalizar.config()
+        global bReportar
+        bAnalizar = Button(text="Abrir Reporte ", command= self.Reportes)
+        # relx = y = relheigth="Altura " width = altura 
+        bAnalizar.place(x=300 , y=300 , height=50 ,width=150)
+        bAnalizar.config(bg="thistle2")
+        bAnalizar.config()
 
 
 
@@ -64,7 +76,7 @@ class interfaz:
         global Instrucciones
         Instrucciones = texto
         
-        print("Archivo de Instrucciones .form")
+       
         print(Instrucciones)
         print("----------------------------")
         global e2
@@ -80,8 +92,34 @@ class interfaz:
         print("Analizar Archivo")
         Instrucciones = e2.get("1.0", "end-1c")
         print(Instrucciones)
+        d = Analizdor()
+        d.analizador(Instrucciones)
+        f = open ('infoAnalizador.txt','w')
+        f.write(Instrucciones)
+        f.close()
+        d.pag()
     
-   
+    def Reportes(self):
+        global comboReportes
+        s = comboReportes.get()
+        global Instrucciones
+       
+        Instrucciones = e2.get("1.0", "end-1c")
+        lex = Analizdor()
+        lex.analizador(Instrucciones)
+        if s =='Repoorte  de Tokens':
+            lex.RerporteTokens()
+        elif s == 'Repoorte  de Errores':
+            lex.RerporteErrores()            
+        elif s == 'Repoorte  de Manual Usuario':
+            pass
+        elif s =='Repoorte  de MAnual Tecnico':
+            pass
+        elif s == 'Reportes':
+            pass
+
+                                    
+        
     
 
 

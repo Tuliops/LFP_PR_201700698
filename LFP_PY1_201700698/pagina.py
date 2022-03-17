@@ -28,53 +28,85 @@ def Pagina(listaCod =[], listaVal =[]):
     unir = [listaCod,listaVal]
     i = 0
     j = 0
-    for c in unir[0] :
+    for c in range(len(listaVal)) :
+        if type(listaVal[c]):
+                v = listaVal[c]
+                v = str(v).lstrip()
+                v = str(v).rstrip()
+        if v=='etiqueta':
+            
+            valor = listaVal[c+1]
+            nombreEtiqueta = valor
+            contenido += etiqueta(valor )
+        elif  v=='texto':
+            nombre = listaVal[c+1]
+            fondo = listaVal[c+2]
+            contenido += texto(nombre, fondo)
+        elif  v=='grupo-radio':
+            nombre = listaVal[c+1]
+            valores = []
+            valores = listaVal[c+2]
+            contenido += grupo_radio(nombre,valores)
+        elif v == 'grupo-option':
+            nombre = listaVal[c+1]
+            valores = []
+            valores = listaVal[c+2]
+            contenido += grupo_option(nombre,valores)
+        elif type(listaVal[c]):
+                v = listaVal[c]
+                v = str(v).lstrip()
+                v = str(v).rstrip()
+                if v == "boton":
+                    valor = listaVal[c+1]
+                    evento = listaVal[c+2]
+                    contenido += boton(valor, evento) 
+    contenido +='<div id="contenido"></div>'                          
+    contenido += """<script src="Actions.js"></script>"""
     
-        if c=='tipo':
-            #Verificar Tipo
-            pass
-        elif c == 'valor':
-            pass
-    
-    """contenido += texto("nombre", "Ingrese su Nombre")
-    v = ['Masculino','Femenido']
-    contenido += grupo_radio("Sexo",v)
-
-    vo = ['Guatemala','Mexico','Argentina']
-    contenido += grupo_option("Pais", vo)"""
-
     htmFile.write(contenido)
     webbrowser.open("Pagina.html")
+    
     htmFile.close
+def boton(valor ,evento):
+
+    contenido = ''
+    if evento == 'info':
+        contenido += '''<h1> <button size="40" id ='btn' name='''+evento+''' value='''+evento+'''  >'''+valor+'''</button></h1>'''
+        
+        return contenido
+    elif evento == 'entrada':
+        contenido += '''<h1> <button size="40" id ='btn' name='''+evento+''' value='''+evento+''' >'''+valor+'''</button></h1>'''
+        return contenido
 
 def etiqueta(nombre):
     contenido = ""
-    contenido += "<p><h3>"+nombre+"</h3></p>"
+    contenido += "<p id='etiqueta' ><h3>"+nombre+"</h3></p>"
     return contenido
 def texto(nombre, fondo):
     contenido = ""
-    contenido +=   '''<h3><input type="text" name="'''+nombre+'''
+    contenido +=   '''<h3><input id='tx' type="text" name="'''+nombre+'''
     " size="40" placeholder="'''+fondo+'''"></h3>'''
     return contenido
 def grupo_radio(nombre,valores=[]):
     contenido =''
-    contenido+='''<p><h3>'''+nombre+ '''  :  '''
+    contenido+='''<p ><h3>'''+nombre+ '''  :  '''
+   
     for v in valores:
-        contenido += '''<input type ="radio"
-         name="boton" value='''+v+''' required> '''+v+'''  '''
-        
+        contenido += '''<input id = 'grupo-radio' type ='radio' name = 'radio' class='radio'
+           value ='''+v+''' required> '''+v+'''</input>   '''
   
     contenido += '''</h3></p>''' 
    
     return contenido
 def grupo_option(nombre, valores=[]):
-    continido = '<p><h3>'''+nombre+''''''
+    continido = '''<p ><h3>'''+nombre+''''''
     
-    continido +=''' <select name="menu">
-  <option selected>...</option>'''
+    continido +=''' <select name="menu" id = 'grupo-option'>
+  <option selected >...</option>'''
     for v in valores:
         continido += '''<option value='''+v+'''>'''+v+'''</option>'''
     continido += '''</select></h3></p>'''
     
     return continido
-  
+
+    

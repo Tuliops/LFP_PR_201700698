@@ -1,10 +1,7 @@
 import webbrowser
-def reportehtml(listaErrores=[]):
-
+def reportehtmlERR(listaErrores=[]):
     contenido = ''
-    contenidomasvendido = ''
-    contenidomenosVendido =''
-    htmFile = open( "ReporteErrores"+ ".html", "w")
+    htmFile = open("Errores.html", "w")
 
     htmFile.write("""<!DOCTYPE HTML PUBLIC"
 
@@ -57,6 +54,6 @@ def reportehtml(listaErrores=[]):
     </div>
         </body>
         </html>""")
-    webbrowser.open("ReporteErrores.html")
+    webbrowser.open("Errores.html")
     htmFile.close
 

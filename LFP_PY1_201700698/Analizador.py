@@ -1,7 +1,7 @@
 import re
 from Token import Token
 from Token import Error
-from ReporteErrores import reportehtml
+from ReporteErrores import reportehtmlERR
 from ReporteToken import reportehtml
 from pagina import Pagina
 class Analizdor:
@@ -134,7 +134,7 @@ class Analizdor:
              # valores 
              # evento #
                 
-                if re.search(r"[a-zA-Z]", c) or c==' ' :
+                if re.search(r"[a-zA-Z]", c) or c==' 'or c=='\n' or c=='\t':
                     if c == ' ':
                         columna += 1
                         estado = 1
@@ -191,6 +191,7 @@ class Analizdor:
                     
                         if c == '\t':
                                 columna += 1
+                        
                         elif c == '\n':
                                 linea += 1
                                 columna = 1
@@ -228,10 +229,8 @@ class Analizdor:
                 self.LIstaError.append(error)
                 buffer = ''
                 estado = 0
-
-            
-                
-
+                columna += 1
+                index-=1
             index += 1
         return datos
 
@@ -257,13 +256,12 @@ class Analizdor:
             error.mostrarError()
             i += 1
     def RerporteErrores(self):
-        reportehtml(self.LIstaError)
+        reportehtmlERR(self.LIstaError)
+        
     def RerporteTokens(self):
         reportehtml(self.listTokens)
     
-    def claveValor(self):
-       
-        
+    def pag (self):
         Pagina(self.c, self.v)
 
 

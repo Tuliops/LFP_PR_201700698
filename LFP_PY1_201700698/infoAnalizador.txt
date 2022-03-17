@@ -20,17 +20,6 @@ formulario ~>>[
         nombre : " Pais  : ",
         valores : ['Guatemala '
         , 'El Salvador', 'Honduras' ]
-    >,
-    < 
-        tipo 
-        : 
-        " boton " 
-        ,
-         
-        valor : "Mostrar DAtos Entrada"
-        ,
-        evento : "info"
-        
     >
 
 @
