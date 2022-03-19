@@ -9,6 +9,12 @@ formulario ~>>[
         valor : "Nombre: ",
         fondo : " Ingrese Nombre "
     >,
+     <  
+    & 
+        tipo : " texto " ,
+        valor : "Carnet ",
+        fondo : " Ingrese Carnet "
+    >,
     < 
         tipo : "grupo-radio",
         nombre : "Sexo : ",
@@ -27,7 +33,18 @@ formulario ~>>[
         " boton " 
         ,
          
-        valor : "Mostrar DAtos Entrada"
+        valor : "Mostrar  Entrada"
+        ,
+        evento : "entrada"
+        
+    >,
+    < 
+        tipo 
+        : 
+        " boton " 
+        ,
+         
+        valor : "Mostrar info"
         ,
         evento : "info"
         

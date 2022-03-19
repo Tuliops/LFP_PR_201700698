@@ -6,6 +6,7 @@ from io import *
 from Analizador import Analizdor
 from ReporteErrores import reportehtmlERR
 from ReporteToken import reportehtml
+import webbrowser
 class interfaz:
     root = object()
     bCargar = object()
@@ -112,7 +113,7 @@ class interfaz:
         elif s == 'Repoorte  de Errores':
             lex.RerporteErrores()            
         elif s == 'Repoorte  de Manual Usuario':
-            pass
+            webbrowser.open("ManualUsuario.pdf")
         elif s =='Repoorte  de MAnual Tecnico':
             pass
         elif s == 'Reportes':

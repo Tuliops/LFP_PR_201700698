@@ -71,11 +71,11 @@ def boton(valor ,evento):
 
     contenido = ''
     if evento == 'info':
-        contenido += '''<h1> <button size="40" id ='btn' name='''+evento+''' value='''+evento+'''  >'''+valor+'''</button></h1>'''
+        contenido += '''<h1> <button size="40" id ='btn' name='''+evento+''' value='''+evento+''' class="boton" >'''+valor+'''</button></h1>'''
         
         return contenido
     elif evento == 'entrada':
-        contenido += '''<h1> <button size="40" id ='btn' name='''+evento+''' value='''+evento+''' >'''+valor+'''</button></h1>'''
+        contenido += '''<h1> <button size="40" id ='btn' name='''+evento+''' value='''+evento+''' class ="boton">'''+valor+'''</button></h1>'''
         return contenido
 
 def etiqueta(nombre):
@@ -85,7 +85,7 @@ def etiqueta(nombre):
 def texto(nombre, fondo):
     contenido = ""
     contenido +=   '''<h3><input id='tx' type="text" name="'''+nombre+'''
-    " size="40" placeholder="'''+fondo+'''"></h3>'''
+    " size="40" placeholder="'''+fondo+'''" class = 'texto'></input></h3>'''
     return contenido
 def grupo_radio(nombre,valores=[]):
     contenido =''
