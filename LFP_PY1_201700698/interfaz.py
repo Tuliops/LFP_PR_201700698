@@ -115,6 +115,7 @@ class interfaz:
         elif s == 'Repoorte  de Manual Usuario':
             webbrowser.open("ManualUsuario.pdf")
         elif s =='Repoorte  de MAnual Tecnico':
+            webbrowser.open("ManualTecnico.pdf")
             pass
         elif s == 'Reportes':
             pass
