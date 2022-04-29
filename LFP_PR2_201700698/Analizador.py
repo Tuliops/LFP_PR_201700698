@@ -16,6 +16,7 @@ class Analizdor:
       self.LIstaError = []  
         
     def analizador(self, datos):
+        self.listTokens = []
         #Lismpiar Listas
         self.c =[]
         linea = 1

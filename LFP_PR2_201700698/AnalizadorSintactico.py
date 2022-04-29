@@ -14,6 +14,7 @@ class AnalizadorSintactico():
         reportehtmlERR("ErroresSintacticos",self.ListaErrores)
 
     def inicio(self):
+        self.i = 0
         token = self.ListaTokens[self.i]
         print(token.tipo)
         #Analisis de las Funciones 
@@ -616,4 +617,5 @@ class AnalizadorSintactico():
         self.ListaErrores = listaErrores
         self.Seasons = Temporadas
         r = self.inicio()
+        self.i = 0
         return r

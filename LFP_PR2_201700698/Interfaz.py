@@ -128,10 +128,10 @@ class Interfaz:
         bot = ""
     
     def ReporteTokens(self):
-        sinta.ReportarErrresSintactico()
+        analizar.RerporteTokens()
+        
     def LimpiarLogTokens(slef):
         analizar.LimpiarLogTokens()
-        sinta.LimpiarErrores()
 
     def CargaSCV(self):
         print("Carga ")
