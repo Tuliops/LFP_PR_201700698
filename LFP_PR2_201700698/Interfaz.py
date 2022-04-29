@@ -6,7 +6,9 @@ from Temporada import Temporada
 from Partido import Partido
 from Analizador import Analizdor
 from AnalizadorSintactico import AnalizadorSintactico
+import webbrowser
 analizar = Analizdor()
+sinta = AnalizadorSintactico()
 
 class Interfaz:
     root = object()
@@ -17,6 +19,9 @@ class Interfaz:
     btnEnviar = object()
     btnReporteTokens = object()
     btnLimpiarTokens = object()
+    btnReporteErrores = object()
+    btnLimpiarErrores = object()
+    bntManuales =object()
     DicParidos = object()
     Temporadas = []
     def __init__(self):
@@ -48,6 +53,23 @@ class Interfaz:
         btnLimpiarTokens.place(x=845 , y=170 , height=50 ,width=150)
         
         btnLimpiarTokens.config()
+        #Errores
+        global btnReporteErrores
+        btnReporteErrores  = Button(text=" Reporte Eroores  ", command=self.Errores)  
+        btnReporteErrores.place(x=845 , y=230 , height=50 ,width=150)
+        
+        btnReporteErrores.config()
+        global btnLimpiarErrores
+        btnLimpiarErrores  = Button(text=" Limpiar Log Eroores  ", command=self.LogErrores)  
+        btnLimpiarErrores.place(x=845 , y=290 , height=50 ,width=150)
+        
+        btnLimpiarErrores.config()
+        #Manuales
+        global bntManuales
+        bntManuales  = Button(text=" MANUALES  ", command=self.Manuales)  
+        bntManuales.place(x=845 , y=350 , height=50 ,width=150)
+        
+        bntManuales.config()
         
 
         global txtChat
@@ -71,13 +93,22 @@ class Interfaz:
                     command= self.Env)
         btnenviar.place(relx=0.77, rely=0.008, relheight=0.06, relwidth=0.22)
         root.mainloop()
+    def Errores(self):
+        print("Errores")
+        analizar.RerporteErrores()
+    def LogErrores(self):
+        print("Log Errores")
+        analizar.LimpiarErrores()
+
+    def Manuales(self):
+        webbrowser.open('ManualUsuario.pdf')
+        webbrowser.open('ManualTecnico.pdf')
 
     def Env(self):
 
         global txtEnviar
         Mensaje = txtEnviar.get()
         lex = analizar.analizador(Mensaje)
-        sinta = AnalizadorSintactico()
         r = sinta.Analizar(analizar.listTokens, analizar.LIstaError,self.Temporadas)
         global txtChat
 
@@ -97,9 +128,10 @@ class Interfaz:
         bot = ""
     
     def ReporteTokens(self):
-        analizar.RerporteTokens()
+        sinta.ReportarErrresSintactico()
     def LimpiarLogTokens(slef):
         analizar.LimpiarLogTokens()
+        sinta.LimpiarErrores()
 
     def CargaSCV(self):
         print("Carga ")

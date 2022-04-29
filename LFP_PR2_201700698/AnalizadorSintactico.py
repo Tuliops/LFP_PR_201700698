@@ -1,12 +1,17 @@
 from Token import Token
 from Token import Error
 import sys
+from ReporteErrores import reportehtmlERR
 class AnalizadorSintactico():
     def __init__(self):
         self.ListaTokens = []
         self.ListaErrores = []
         self.Seasons = []
         self.i = 0
+    def LimpiarErrores(self):
+        self.ListaErrores = []
+    def ReportarErrresSintactico(self):
+        reportehtmlERR("ErroresSintacticos",self.ListaErrores)
 
     def inicio(self):
         token = self.ListaTokens[self.i]
@@ -91,48 +96,48 @@ class AnalizadorSintactico():
                                                         # $ >
                                                         pass
                                                 else:
-                                                    error = Error("Lexico", token.tipo, token.linea, token.columna)
+                                                    error = Error("SINTACTICO", '>', token.linea, token.columna)
                                                     self.ListaErrores.append(error)
                                             else :
-                                                error = Error("Lexico", token.tipo, token.linea, token.columna)
+                                                error = Error("SINTACTICO", token.tipo, token.linea, token.columna)
                                                 self.ListaErrores.append(error)
                                         else :
-                                            error = Error("Lexico", token.tipo, token.linea, token.columna)
+                                            error = Error("SINTACTICO", token.tipo, token.linea, token.columna)
                                             self.ListaErrores.append(error)
                                     else : 
-                                        error = Error("Lexico", token.tipo, token.linea, token.columna)
+                                        error = Error("SINTACTICO", token.tipo, token.linea, token.columna)
                                         self.ListaErrores.append(error)
                                 else:
-                                    error = Error("Lexico", token.tipo, token.linea, token.columna)
+                                    error = Error("SINTACTICO", token.tipo, token.linea, token.columna)
                                     self.ListaErrores.append(error)
 
                             else:
-                                error = Error("Lexico", token.tipo, token.linea, token.columna)
+                                error = Error("SINTACTICO", token.tipo, token.linea, token.columna)
                                 self.ListaErrores.append(error)
 
                         else:
-                            error = Error("Lexico", token.tipo, token.linea, token.columna)
+                            error = Error("SINTACTICO", token.tipo, token.linea, token.columna)
                             self.ListaErrores.append(error)
 
                     else :
                         pass
-                        error = Error("Lexico", token.tipo, token.linea, token.columna)
+                        error = Error("SINTACTICO", token.tipo, token.linea, token.columna)
                         self.ListaErrores.append(error)
                        
                 else :
-                    error = Error("Lexico", token.tipo, token.linea, token.columna)
+                    error = Error("SINTACTICO", token.tipo, token.linea, token.columna)
                     self.ListaErrores.append(error)
                     #Se Esperaba Equipo 
 
             else :
-                error = Error("Lexico", token.tipo, token.linea, token.columna)
+                error = Error("SINTACTICO", token.tipo, token.linea, token.columna)
                 self.ListaErrores.append(error)
                 #se Esperaba "
 
 
             
         else:
-            error = Error("Lexico", token.tipo, token.linea, token.columna)
+            error = Error("SINTACTICO", token.tipo, token.linea, token.columna)
             self.ListaErrores.append(error)
         print("----------")
         print(equipo1)

@@ -2,6 +2,7 @@ import re
 from Token import Token
 from Token import Error
 from ReporteToken import reportehtml
+from ReporteErrores import reportehtmlERR
 class Analizdor:
 
     def __init__(self):
@@ -115,11 +116,12 @@ class Analizdor:
                 elif re.search(r"[A-Z]", c) :
                     buffer += c
                     columna += 1
-                elif re.search(r"[$]", c):
+                elif c == '$':
                     token = Token('EOF', c, linea, columna)
                     self.listTokens.append(token)
                 else :
-                    estado  =5
+                    buffer += c
+                    estado  = 5
             #Resultados 
             elif estado == 1 : 
                 if  c == '“'or c == '”' or c =='"':
@@ -324,12 +326,13 @@ class Analizdor:
             elif estado == 5 :
                 error = Error("Error Lexico", buffer, linea, columna)
                 self.LIstaError.append(error)
+                print(buffer)
                 buffer = ''
                 estado = 0
                 columna += 1
                 index-=1
             index += 1 
-            
+        
         print("Lexico Exitoso ")
         return datos
         
@@ -355,7 +358,7 @@ class Analizdor:
             error.mostrarError()
             i += 1
     def RerporteErrores(self):
-        reportehtmlERR(self.LIstaError)
+        reportehtmlERR("ErroresLexicos",self.LIstaError)
         
     def RerporteTokens(self):
         reportehtml(self.listTokens)
