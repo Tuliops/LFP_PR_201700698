@@ -1,6 +1,6 @@
 from Token import Token
 from Token import Error
-
+import sys
 class AnalizadorSintactico():
     def __init__(self):
         self.ListaTokens = []
@@ -33,6 +33,9 @@ class AnalizadorSintactico():
         elif token.tipo == 'TOP':
             return self.TopEquipos()
             self.i = 0
+        elif token.tipo =='ADIOS':
+            return self.Salida()
+            self.i
 
         
     #Token(tipo, lexema, linea, columna)
@@ -519,11 +522,12 @@ class AnalizadorSintactico():
                     return respuesta
             
 
-    def TopEquipos (self):
-        n = 5 
+    def TopEquipos(self):
+        n = '5' 
         temporada = ''
         condicion = ''
         self.i += 1
+        print("ASDF")
         token = self.ListaTokens[self.i]
         if token.tipo == 'CONDICION':
             condicion = token.lexema
@@ -554,29 +558,52 @@ class AnalizadorSintactico():
                                     if token.tipo == 'NUMERO EQUIPOS':
                                         n = token.lexema
                                 else:
-                                    pass
+                                    error = Error("SINTACTICO", token.lexema, token.linea, token.columna)
+                                    self.ListaErrores.append(error)
 
                             else:
                                 print("Cierra")
+                                error = Error("SINTACTICO", token.lexema, token.linea, token.columna)
+                                self.ListaErrores.append(error)
                                     
                         else:
                             print("N Temporada ")
+                            error = Error("SINTACTICO", token.lexema, token.linea, token.columna)
+                            self.ListaErrores.append(error)
 
                     else:
                         print("Guion ")
+                        error = Error("SINTACTICO", token.lexema, token.linea, token.columna)
+                        self.ListaErrores.append(error)
                 else:
                     print("Guion")
+                    error = Error("SINTACTICO", token.lexema, token.linea, token.columna)
+                    self.ListaErrores.append(error)
             else:
                 print("TEmporada")
+                error = Error("SINTACTICO", token.lexema, token.linea, token.columna)
+                self.ListaErrores.append(error)
                 
 
         else : 
             print("condicion")
             error = Error("SINTACTICO", token.lexema, token.linea, token.columna)
             self.ListaErrores.append(error)
-        pass
+        print(temporada)
+        print(condicion)
+        print(n)
+        
+        for t in self.Seasons:
+                if t.getSeasonYear() == temporada:
+                    respuesta = t.TopEquipos(condicion,n)
+                    return respuesta
+
+
+
+
     def Salida(self):
-        pass
+        sys.exit()
+        return "ADIOS"
 
     
     def Analizar(self, listaTokens , listaErrores,Temporadas):

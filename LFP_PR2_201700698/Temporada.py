@@ -358,7 +358,71 @@ class Temporada:
         print("Goles : " ,nGoles)
         return "Los goles anotados por el "+  equipo+  " en " + condicion + " \n \t en la temporada " +self.getSeasonYear() +" fueron  "  +str(nGoles)
         
+    def TopEquipos(self,condicion,tope):
+        n = 1
+        equipos = []
 
+        for partido in self.matches:
+                if  partido.getLocal() not in equipos:
+                    equipos.append(partido.getLocal())
+        n= 0
+        Tabla = []
+        for e in equipos:
+            pts = 0
+            for partido in self.matches:
+                if partido.getLocal() == e:
+                    if partido.getGolLocal()<partido.getGolVisitante():
+                        pts += 0
+                    elif partido.getGolLocal()>partido.getGolVisitante():
+                        pts += 3
+                    elif partido.getGolLocal()== partido.getGolVisitante():
+                        pts += 1
+            for partido in self.matches:
+                if partido.getVisitante() == e:
+                    if partido.getGolLocal()<partido.getGolVisitante():
+                        pts += 3
+                    elif partido.getGolLocal()>partido.getGolVisitante():
+                        pts += 0
+                    elif partido.getGolLocal()== partido.getGolVisitante():
+                        pts += 1
+            equipo={
+                'Equipo' :  e,
+                'Puntos' :  pts ,
+            }
+            
+            Tabla.append(equipo)
+        ordenPUntos = []
+        for e in Tabla:
+             ordenPUntos.append(e['Puntos'])
+        
+        Ordenado = self.bubbleSort(ordenPUntos)
+        TablaOrdenada = []
+        e= object()
+        for puntos in reversed(Ordenado):
+            for equipo in Tabla:
+                if equipo['Puntos'] == puntos :
+                    
+                    e = {
+                        'Equipo': equipo['Equipo'],
+                        'Puntos': puntos
+                    }
+                    if e not in TablaOrdenada:
+                        TablaOrdenada.append(e)
+        r = ''
+        a ='El top superior de la temporada'+str(self.getSeasonYear())+ ' fue:\n'
+        if condicion =='SUPERIOR':
+            for s in TablaOrdenada:
+                if n <= int(tope):
+                    r += str(n+1)+":"+str(s['Equipo']) +"  -\t"+ str(s['Puntos']) +"\n"
+                    n += 1
+        elif condicion =='INFERIOR':
+            l = len(TablaOrdenada)
+            for s in TablaOrdenada:
+                if n >= int(l-5):
+                    r += str(n+1)+":"+str(s['Equipo']) +"  -\t"+ str(s['Puntos']) +"\n"
+                n += 1
+        print(a+r)
+        return a+r
     def TablaTemporada(self,nombre):
         equipos = []
 

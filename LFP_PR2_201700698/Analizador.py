@@ -91,9 +91,13 @@ class Analizdor:
                     estado = 11
                     buffer = ''
                 elif buffer == 'TOP':
-                    token = Token("TOP ", buffer, linea, columna)
+                    token = Token("TOP", buffer, linea, columna)
                     self.listTokens.append(token)
                     estado = 10
+                    buffer = ''
+                elif buffer == 'ADIOS':
+                    token = Token("ADIOS", buffer, linea, columna)
+                    self.listTokens.append(token)
                     buffer = ''
                 elif re.search(r"[f]", c) or re.search(r"[-]", c) or re.search(r"[j]", c):
                     buffer += c
@@ -291,12 +295,12 @@ class Analizdor:
                     columna += 1
                     buffer += c
                 elif buffer == 'SUPERIOR':
-                    token = Token("CONDICION ", buffer, linea, columna)
+                    token = Token("CONDICION", buffer, linea, columna)
                     self.listTokens.append(token)
                     buffer = ''
                     estado = 0
                 elif buffer == 'INFERIOR':
-                    token = Token("CONDICION ", buffer, linea, columna)
+                    token = Token("CONDICION", buffer, linea, columna)
                     self.listTokens.append(token)
                     buffer = ''
                     estado = 0
@@ -308,7 +312,7 @@ class Analizdor:
                 else :
                     
                     n = buffer
-                    token = Token("NUMERO  EQUIPOS  ", buffer, linea, columna) 
+                    token = Token("NUMERO EQUIPOS", buffer, linea, columna) 
                     self.listTokens.append(token)
                     buffer = ''
                     columna += 1
